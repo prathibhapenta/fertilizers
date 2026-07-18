@@ -5,7 +5,7 @@ import "./AdminLogin.css";
 
 function AdminLogin() {
   const navigate = useNavigate();
- const API_URL = import.meta.env.VITE_API_URL;
+
   const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -28,8 +28,8 @@ function AdminLogin() {
     e.preventDefault();
 
     try {
-     const response = await fetch(
-  `${API_URL}/auth/admin/login`,
+      const response = await fetch(
+        "http://localhost:5000/auth/admin/login",
         {
           method: "POST",
           headers: {
