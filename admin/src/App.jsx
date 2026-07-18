@@ -24,7 +24,7 @@ export default function App() {
       <Routes>
 
         {/* Public Routes */}
-        <Route path="admin/login" element={<AdminLogin />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/register" element={<AdminRegister />} />
 
         {/* Protected Admin Routes */}
@@ -51,8 +51,7 @@ export default function App() {
         </Route>
 
         {/* Redirect unknown routes */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
-
+        <Route path="*" element={<Navigate to="/admin/login" replace />} />
       </Routes>
     </BrowserRouter>
   );

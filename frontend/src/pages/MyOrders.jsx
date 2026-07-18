@@ -36,6 +36,47 @@ console.log(localStorage.getItem("customer_phone"));
 
   fetchOrders();
 }, []);
+const handleDelete = async (id) => {
+
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this order?"
+  );
+
+  if (!confirmDelete) return;
+
+
+  try {
+
+    const response = await fetch(
+      `${API_URL}/orders/delete/${id}`,
+      {
+        method: "DELETE"
+      }
+    );
+
+
+    const data = await response.json();
+
+
+    if(data.success){
+
+      // remove deleted order from UI
+      setOrders(
+        orders.filter(
+          (order)=> order.id !== id
+        )
+      );
+
+    }
+
+
+  } catch(error){
+
+    console.log(error);
+
+  }
+
+};
 
   if (loading) {
     return (
@@ -114,6 +155,12 @@ console.log(localStorage.getItem("customer_phone"));
                 >
                   {order.order_status}
                 </span>
+                <button
+                  className="delete-order-btn"
+                  onClick={() => handleDelete(order.id)}
+                >
+                  Delete Order
+                </button>
 
               </div>
 

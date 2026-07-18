@@ -255,3 +255,27 @@ export const getOrdersByUser = async (req, res) => {
 
   }
 };
+
+export const deleteOrder = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await sql`
+      DELETE FROM orders
+      WHERE id = ${id}
+    `;
+
+    res.json({
+      success: true,
+      message: "Order deleted successfully"
+    });
+
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Delete failed"
+    });
+  }
+};
