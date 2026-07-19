@@ -100,74 +100,75 @@ const handleDelete = async (id) => {
           <p>You haven't placed any orders.</p>
         </div>
       ) : (
-        <div className="orders-list">
+        <div className="orders-grid">
+  {orders.map((order) => (
+    <div className="order-card" key={order.id}>
 
-          {orders.map((order, index) => (
-            <div
-              className="order-card"
-              key={index}
-            >
+      <div className="order-left">
+        <img
+          src={order.product_image}
+          alt={order.product_name}
+          className="product-image"
+        />
+      </div>
 
-              <div className="order-image">
-                <img
-                  src={order.product_image}
-                  alt={order.product_name}
-                />
-              </div>
+      <div className="order-center">
 
-              <div className="order-details">
+        <h2>{order.product_name}</h2>
 
-                <h2>{order.product_name}</h2>
+        <div className="order-info">
 
-                <p>
-                  <strong>Package :</strong>{" "}
-                  {order.package_size}
-                </p>
+          <div>
+            <span>Package</span>
+            <p>{order.package_size}</p>
+          </div>
 
-                <p>
-                  <strong>Price :</strong> ₹
-                  {order.price}
-                </p>
+          <div>
+            <span>Quantity</span>
+            <p>{order.quantity}</p>
+          </div>
 
-                <p>
-                  <strong>Quantity :</strong>{" "}
-                  {order.quantity}
-                </p>
+          <div>
+            <span>Price</span>
+            <p>₹{order.price}</p>
+          </div>
 
-                <p>
-                  <strong>Total :</strong> ₹
-                  {order.total_amount}
-                </p>
-
-                <p>
-                  <strong>Order Date :</strong>{" "}
-                  {new Date(
-                    order.created_at
-                  ).toLocaleDateString("en-IN")}
-                </p>
-
-                <span
-                  className={`order-status ${(
-                    order.order_status || ""
-                  )
-                    .toLowerCase()
-                    .replace(/\s+/g, "-")}`}
-                >
-                  {order.order_status}
-                </span>
-                <button
-                  className="delete-order-btn"
-                  onClick={() => handleDelete(order.id)}
-                >
-                  Delete Order
-                </button>
-
-              </div>
-
-            </div>
-          ))}
+          <div>
+            <span>Total</span>
+            <p>₹{order.total_amount}</p>
+          </div>
 
         </div>
+
+        <small>
+          Ordered on{" "}
+          {new Date(order.created_at).toLocaleDateString("en-IN")}
+        </small>
+
+      </div>
+
+      <div className="order-right">
+
+        <span
+          className={`status ${(order.order_status || "")
+            .toLowerCase()
+            .replace(/\s+/g, "-")}`}
+        >
+          {order.order_status}
+        </span>
+
+        <button
+          className="delete-order-btn"
+          onClick={() => handleDelete(order.id)}
+        >
+          Delete Order
+        </button>
+
+      </div>
+
+    </div>
+  ))}
+</div>
       )}
     </section>
   );
